@@ -26,19 +26,17 @@
 			$stmt = $db->prepare("SELECT `id` FROM `your_table_name` WHERE mofuindex LIKE :l");
 			$stmt->execute(array(':l' => '%' . $key . '%'));
 			$sqlresult = $stmt->fetchAll();
-			foreach($sqlresult as $row) $result[$row['oihid']] ++;
+			foreach($sqlresult as $row) $result[$row['id']] ++;
 			//准备模糊匹配
-			$curweightc = array();
-			$curweightt = array();
+			$curweight = array();
 			foreach ($subkey as $eachsubkey) {
 				//模糊
 				$stmt = $db->prepare("SELECT `id` FROM your_table_name WHERE mofuindex LIKE :l");
 				$stmt->execute(array(':l' => '%' . $eachsubkey . '%'));
 				$sqlresult = $stmt->fetchAll();
-				foreach($sqlresult as $row) $curweightt[$row['id']] ++;
+				foreach($sqlresult as $row) $curweight[$row['id']] ++;
 			}
-			foreach ($curweightc as $key => $row) $result[$key] += pow($row/count($subkey),2);	
-			foreach ($curweightt as $key => $row) $result[$key] += pow($row/count($subkey),2);
+			foreach ($curweight as $key => $row) $result[$key] += pow($row/count($subkey),2);	
 		}
 		arsort($result);
 		return $result;
