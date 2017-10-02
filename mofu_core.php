@@ -1,8 +1,9 @@
 <?php
 	error_reporting(0);
+	include_once("prepare.php");
 	function mofu($query) {
 		$db = new PDO('mysql:host=your_db_host;dbname=your_data_base;charset=utf8', 'your_db_username', 'your_db_password');
-		$keyarr = explode(' ',trim($query));
+		$keyarr = explode(' ',trim(mofu_prepare($query)));
 		$result = array();
 		foreach ($keyarr as $key) {
 			$subkey = array();
